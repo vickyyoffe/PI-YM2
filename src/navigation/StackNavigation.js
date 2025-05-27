@@ -3,6 +3,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Pantalla from "../screens/Pantalla";
 import Login from "../screens/Login";
 import Register from "../screens/Register";
+import Home from "../screens/Home";
+import BottomTabs from "./Bottomtabs";
 
 const Stack = createNativeStackNavigator ();
 function StackNavigation() {
@@ -23,13 +25,20 @@ function StackNavigation() {
                 options={{headerShown: false}} 
             />
             <Stack.Screen 
-            name='Register' 
-            component={Register}
-            options={
+                name='Register' 
+                component={Register}
+                options={
                 {
                     headerShown: false
                 }
             }
+            />
+             <Stack.Screen
+                name='Tab'
+                component={BottomTabs}
+                options={{
+                    headerShown:false
+                }}
             />
 
         

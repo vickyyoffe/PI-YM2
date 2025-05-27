@@ -11,22 +11,16 @@ class Login extends Component {
             error: false
         }
     }
-    componentDidMount(){
-        auth.onAuthStateChanged((user) => {
-            if(user){
-                this.props.navigation.navigate('tab')
-            }
-        })
-    }
+  
 
     LoguearUsuario(email, password){
         if(
             (email !== '' && password !== '')
                 && password.length >= 6 && email.includes('@')
         ){
-            auth.createUserWithEmailAndPassword(email, password)
+            auth.signInWithEmailAndPassword(email, password) 
             .then(() => {
-                this.props.navigation.navigate('tab')
+                this.props.navigation.navigate('Tab')
             })
             .catch(err => console.log('err:', err))
         }
@@ -55,6 +49,9 @@ class Login extends Component {
                 placeholder='Ingresa tu password'
                 secureTextEntry={true}
             />
+            <TouchableOpacity onPress={() => this.LoguearUsuario(this.state.email, this.state.password)}>
+                    <Text>Login</Text>
+                </TouchableOpacity>
       </View>
     )
   }
