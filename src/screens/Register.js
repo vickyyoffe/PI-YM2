@@ -13,29 +13,18 @@ export default class Register extends Component {
             username: ''
         }
     }
-    componentDidMount() {
+    componentDidMount() { 
         auth.onAuthStateChanged((user) => {
-            if (user) {
-                this.props.navigation.navigate('Tab') 
-            }
-        })
-
+          if (user) {
+        this.props.navigation.navigate('Tab') 
+        }
+    })
     }
     register(email, password, username) {
-        if (
-            email !== "" &&
-            password !== '' &&
-            username !== ''
-        ) {
-            if (
-                email.includes('@')
-            ) {
-                if (
-                    password.length > 6
-                ) {
-                    if (
-                        username.length > 3
-                    ) {
+        if (email !== "" && password !== '' && username !== '') {
+            if (email.includes('@')) {
+                if (password.length > 6) {
+                    if (username.length > 3) {
                         auth.createUserWithEmailAndPassword(email, password)
                             .then(() => {
                                 this.props.navigation.navigate('Login')
@@ -67,21 +56,17 @@ export default class Register extends Component {
 
     render() {
         return (
-            <View>
-                <Text>Register</Text>
+            <View style= {styles.container}>
+                <Text style={styles.title}>Registrarse</Text>
                 <TextInput
-                    style={
-                        styles.input
-                    }
+                    style={styles.input}
                     keyboardType='default'
                     value={this.state.email}
                     onChangeText={(text) => this.setState({ email: text, error: false })}
                     placeholder='Ingresa tu email'
                 />
                 <TextInput
-                    style={
-                        styles.input
-                    }
+                    style={styles.input}
                     keyboardType='default'
                     value={this.state.password}
                     onChangeText={(texto) => this.setState({ password: texto, error: false })} //Segundo campo de entrada (contraseña).
@@ -89,28 +74,63 @@ export default class Register extends Component {
                     secureTextEntry={true} //para ocultar el texto.
                 />
                 <TextInput
-                    style={
-                        styles.input
-                    }
+                    style={styles.input}
                     keyboardType='default'
                     value={this.state.username}
                     onChangeText={(text) => this.setState({ username: text, error: false })}
                     placeholder='Ingresa tu username'
                 />
-                <TouchableOpacity onPress={() => this.register(this.state.email, this.state.password, this.state.username)}>
-                    <Text>Registrarme</Text>
+                <TouchableOpacity style={styles.button} onPress={() => this.register(this.state.email, this.state.password, this.state.username)}>
+                    <Text style={styles.buttonText}>Registrarme</Text>
                 </TouchableOpacity>
-                {
-                    this.state.error ? <Text>Credenciales invalidas</Text> : null //Si error es true, muestra un mensaje indicando que las credenciales son inválidas.
-                }
+                <TouchableOpacity style={styles.button} onPress={() => this.props.navigation.navigate('Login')}>
+                    <Text style={styles.buttonText}>¿Ya tenés cuenta? Iniciá sesión</Text>
+                </TouchableOpacity>
             </View>
         )
     }
 }
 const styles = StyleSheet.create({
-    input: { //Este estilo se aplica a los TextInput.
-        borderWidth: 2,
-        borderColor: 'red'
+    container: {
+        flex: 1,
+        backgroundColor: '#f2f2f2',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 20,
+    },
+    title: {
+        fontSize: 28,
+        fontWeight: 'bold',
+        color: 'black',
+        marginBottom: 30,
+    },
+    input: {
+        width: '100%',
+        padding: 12,
+        marginVertical: 10,
+        borderWidth: 1.5,
+        borderColor: 'red',
+        borderRadius: 10,
+        backgroundColor: '#fff',
+        color: '#000',
+    },
+    button: {
+        backgroundColor: 'red',
+        paddingVertical: 12,
+        paddingHorizontal: 40,
+        borderRadius: 10,
+        marginTop: 20,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.3,
+        shadowRadius: 3,
+        elevation: 5,
+    },
+    buttonText: {
+        color: '#fff',
+        fontSize: 16,
+        fontWeight: 'bold',
+        textAlign: 'center',
     }
 })
 

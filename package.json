@@ -2,13 +2,12 @@
   "name": "pi",
   "version": "1.0.0",
   "main": "index.js",
- "scripts": {
-  "start": "react-scripts start",
-  "build": "react-scripts build",
-  "test": "react-scripts test",
-  "eject": "react-scripts eject",
-  "web": "react-scripts start --web"
-},
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web"
+  },
   "dependencies": {
     "@expo/metro-runtime": "~5.0.4",
     "@react-navigation/bottom-tabs": "^7.3.13",
@@ -25,8 +24,7 @@
     "react-native-web": "^0.20.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.0",
-    "react-scripts": "^5.0.1"
+    "@babel/core": "^7.20.0"
   },
   "private": true
 }
