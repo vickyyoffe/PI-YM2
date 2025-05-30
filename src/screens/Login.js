@@ -11,7 +11,6 @@ class Login extends Component {
             error: false
         }
     }
-
     LoguearUsuario(email, password) {
         if (
             (email !== '' && password !== '')
@@ -52,7 +51,7 @@ class Login extends Component {
                 <TouchableOpacity
                     style={styles.button}
                     onPress={() => this.props.navigation.navigate('Register')}>
-                    <Text style={styles.buttonText}>Me tengo que registrar!</Text>
+                    <Text style={styles.buttonText}>¿No tenes cuenta? Registrate!</Text>
                 </TouchableOpacity>
 
             </View>
