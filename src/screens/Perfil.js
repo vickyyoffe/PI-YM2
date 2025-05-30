@@ -11,8 +11,8 @@ export default class Perfil extends Component {
     auth.signOut()
     .then(()=> this.props.navigation.navigate('Register'))
     .catch(err => console.log('err en signouth', err));
-    this.props.navigation.navigate('login')}
-  
+    //this.props.navigation.navigate('login')}
+  }
 
   render(){
     return (
