@@ -11,29 +11,28 @@ export default class Perfil extends Component {
         }
       }
       componentDidMount(){
-        db.collection('users').onSnapshot((docs) => { //tiene que ser current email? pq no me aparece el registro 
+        db.collection('users').where('owner', '==', auth.currentUser.email).onSnapshot((docs) => { 
           let datos =[];
           docs.forEach((doc) => datos.push({
             id: doc.id,
             data:doc.data()
           }))
-          //una vez que se termina:
           this.setState({dataDelUsuario:datos[0]})
         })
-        db.collection('posts').onSnapshot((docs) => {
+        db.collection('posts').where('owner', '==', auth.currentUser.email).onSnapshot((docs) => { 
           let posteos =[];
           docs.forEach((doc) => posteos.push({
             id: doc.id,
             data:doc.data()
           }))
-          //una vez que se termina:
+          console.log(posteos);
           this.setState({postDelUsuario:posteos})
         })
 
       }
   logout(){
     auth.signOut()
-    .then(()=> this.props.navigation.navigate('Register'))
+    .then(()=> this.props.navigation.navigate('Login'))
     .catch(err => console.log('err en signouth', err));
     //this.props.navigation.navigate('login')}
   }
@@ -59,7 +58,7 @@ export default class Perfil extends Component {
                 keyExtractor={(item) => item.id}
                 renderItem={({ item }) => (
                   <View style={styles.cardPost}>
-                    <Text style={styles.textoPost}>{item.data.contenido}</Text>
+                    <Text style={styles.textoPost}>{item.data.descripcion}</Text>
                   </View>
                 )}
               />
