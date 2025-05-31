@@ -18,4 +18,5 @@ export default function BottomTabs() {
               tabBarIcon: () => <FontAwesome6 name="face-grin" size={24} color="red" /> //options.tabBarIcon: opcional, para agregar un ícono personalizado a la pestaña (como hiciste con FontAwesome en Feed).
             }} />
        </Tab.Navigator>
+       
     )}

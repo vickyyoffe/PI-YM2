@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
   },
   button: {
-    backgroundColor: '#c40000', // rojo fuerte para ambos botones
+    backgroundColor: 'red', // rojo fuerte para ambos botones
     paddingVertical: 14,
     paddingHorizontal: 24,
     borderRadius: 8,
