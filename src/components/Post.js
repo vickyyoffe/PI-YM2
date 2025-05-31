@@ -1,138 +1,141 @@
-import React, { Component} from "react";
+import React, { Component, lazy } from "react";
 import { View, Text, Image, StyleSheet, FlatList, ActivityIndicator, TouchableOpacity } from 'react-native'
 import { auth, db } from '../firebase/config'
 import firebase from 'firebase';
 
 class Post extends Component {
     constructor(props) {
-        super(props) 
-        this.state ={
+        super(props)
+        this.state = {
             label: "dislike",
             cantLikes: this.props.datos.like.length,  //va por el estado pq es dinamico
             estadoLikeo: true
         }
     }
-    componentDidMount(){
-        if(this.props.datos.like.includes(auth.currentUser.email)) {
-            this.setState({label:"dislike", estadoLikeo:true}) //en este caso esta likeado, y si toco el boton dislikeo 
+    componentDidMount() {
+        if (this.props.datos.like.includes(auth.currentUser.email)) {
+            this.setState({ label: "dislike", estadoLikeo: true }) //en este caso esta likeado, y si toco el boton dislikeo 
         }
         else {
-            this.setState({label:"like", estadoLikeo:false}) //en este caso esta dislikeado, y si toco el boton likeo 
+            this.setState({ label: "like", estadoLikeo: false }) //en este caso esta dislikeado, y si toco el boton likeo 
         }
     }
 
-    likear(){
-        if(this.state.estadoLikeo == true){
+    likear() {
+        if (this.state.estadoLikeo == true) {
             db.collection('posts')
-            .doc(this.props.id)
-            .update({
-                like: firebase.firestore.FieldValue.arrayRemove(auth.currentUser.email) 
-            })
-            .then(() => this.setState({
-                cantLikes: this.state.cantLikes - 1,
-                label: "Like",
-                estadoLikeo: false
-            }))
+                .doc(this.props.id)
+                .update({
+                    like: firebase.firestore.FieldValue.arrayRemove(auth.currentUser.email)
+                })
+                .then(() => this.setState({
+                    cantLikes: this.state.cantLikes - 1,
+                    label: "Like",
+                    estadoLikeo: false
+                }))
         }
         else {
             db.collection('posts')
-            .doc(this.props.id)
-            .update({
-                like: firebase.firestore.FieldValue.arrayUnion(auth.currentUser.email) 
-            })
-            .then(() => this.setState({
-                cantLikes: this.state.cantLikes + 1,
-                label: "Dislike",
-                estadoLikeo: true
-            }))    
+                .doc(this.props.id)
+                .update({
+                    like: firebase.firestore.FieldValue.arrayUnion(auth.currentUser.email)
+                })
+                .then(() => this.setState({
+                    cantLikes: this.state.cantLikes + 1,
+                    label: "Dislike",
+                    estadoLikeo: true
+                }))
         }
-       
+
     }
 
     delete() {
         db.collection('posts')
-        .doc(this.props.id)
-        .delete()
-        .then(() => {
-        })
-        .catch((error) => {
-        });
+            .doc(this.props.id)
+            .delete()
+            .then(() => {
+            })
+            .catch((error) => {
+            });
     }
-    
+
     render() {
         return (
             <View style={styles.cardPost}>
-                <Text style={styles.textoPost}>{this.props.datos.descripcion}</Text>
-                <Text style={styles.textoPost}>{this.props.datos.owner} </Text>
-                <Text style={styles.textoPost}>Likes:{this.state.cantLikes} </Text>
-                <TouchableOpacity style={styles.button} onPress={() => this.likear()}> 
-                    <Text style={styles.buttonText}> {this.state.label}</Text>
-                </TouchableOpacity>
-                {this.props.miPerfil ? ( <TouchableOpacity style={styles.button} onPress={() => this.delete()}> 
-                    <Text style={styles.buttonText}> eliminar </Text>
-                </TouchableOpacity>) : (<View> </View>) }
+                <Text style={styles.descripcion}>{this.props.datos.descripcion}</Text>
+                <Text style={styles.owner}>{this.props.datos.owner}</Text>
+
+                <View style={styles.likesRow}>
+                    <Text style={styles.likes}>❤️ {this.state.cantLikes}</Text>
+
+                    <TouchableOpacity style={styles.buttonLike} onPress={() => this.likear()}>
+                        <Text style={styles.buttonText}>{this.state.label}</Text>
+                    </TouchableOpacity>
+
+                    {this.props.miPerfil && (
+                        <TouchableOpacity style={styles.buttonDelete} onPress={() => this.delete()}>
+                            <Text style={styles.buttonDeleteText}>Eliminar</Text>
+                        </TouchableOpacity>
+                    )}
+                </View>
             </View>
+
         )
     }
 
 }
 
+
 const styles = StyleSheet.create({
-    fondo: {
-        flex: 1,
-        backgroundColor: '#fefefe',
-        padding: 20,
-    },
-    tituloPrincipal: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        marginBottom: 15,
-        color: '#1e1e1e',
-    },
-    itemInfo: {
-        fontSize: 16,
-        marginBottom: 5,
-        color: '#555',
-    },
-    subtitulo: {
-        fontSize: 18,
-        marginTop: 20,
-        marginBottom: 10,
-        fontWeight: '600',
-        color: '#333',
-    },
-    sinPost: {
-        fontSize: 16,
-        fontStyle: 'italic',
-        color: '#888',
-    },
     cardPost: {
-        padding: 10,
-        backgroundColor: '#e8f0fe',
-        borderRadius: 6,
-        marginBottom: 10,
-    },
-    textoPost: {
-        fontSize: 15,
-        color: '#111',
-    },
-    botonSalir: {
-        marginTop: 30,
-        padding: 12,
-        backgroundColor: 'red',
-        borderRadius: 6,
+        backgroundColor: '#fff0f0',
+        borderRadius: 12,
+        padding: 15,
+        marginBottom: 15,
+      },
+      descripcion: {
+        fontSize: 18,
+        fontWeight: '600',
+        color: '#222',
+        marginBottom: 6,
+      },
+      owner: {
+        fontSize: 14,
+        color: '#555',
+        marginBottom: 12,
+      },
+      likesRow: {
+        flexDirection: 'row',
         alignItems: 'center',
-    },
-    textoBoton: {
-        color: 'white',
-        fontSize: 16,
-        fontWeight: 'bold',
-    },
-    cargando: {
-        marginTop: 50,
-        textAlign: 'center',
-        fontSize: 16,
-    },
-});
+        justifyContent: 'flex-start',
+        gap: 10,
+      },
+      likes: {
+        fontSize: 15,
+        color: '#e91e63',
+      },
+      buttonLike: {
+        backgroundColor: '#e0e0e0', // gris claro
+        paddingVertical: 4,
+        paddingHorizontal: 10,
+        borderRadius: 6,
+      },
+      buttonText: {
+        color: '#222', // texto negro
+        fontSize: 14,
+        fontWeight: '600',
+      },
+      buttonDelete: {
+        backgroundColor: '#f44336',
+        paddingVertical: 4,
+        paddingHorizontal: 10,
+        borderRadius: 6,
+      },
+      buttonDeleteText: {
+        color: '#fff',
+        fontSize: 14,
+        fontWeight: '600',
+      },
+    });      
 
 export default Post;

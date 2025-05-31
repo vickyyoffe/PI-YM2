@@ -52,13 +52,13 @@ class Login extends Component {
                     placeholderTextColor="#666"
                     secureTextEntry={true}
                 />
-                <TouchableOpacity style={styles.button} onPress={() => this.LoguearUsuario(this.state.email, this.state.password)}>
-                    <Text style={styles.buttonText}>Ingresar</Text>
+                <TouchableOpacity style={styles.outlineButton} onPress={() => this.LoguearUsuario(this.state.email, this.state.password)}>
+                    <Text style={styles.outlineButtonText}>Ingresar</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    style={styles.button}
+                    style={styles.outlineButton}
                     onPress={() => this.props.navigation.navigate('Register')}>
-                    <Text style={styles.buttonText}>¿No tenes cuenta? Registrate!</Text>
+                    <Text style={styles.outlineButtonText}>¿No tenes cuenta? Registrate!</Text>
                 </TouchableOpacity>
 
             </View>
@@ -67,59 +67,48 @@ class Login extends Component {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#f2f2f2', // gris claro
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: 20,
-    },
-    title: {
-        fontSize: 28,
-        fontWeight: 'bold',
-        color: 'black',
-        marginBottom: 30,
-    },
-    input: {
-        width: '100%',
-        padding: 12,
-        marginVertical: 10,
-        borderWidth: 1.5,
-        borderColor: 'red',
-        borderRadius: 10,
-        backgroundColor: '#fff',
-        color: '#000',
-    },
-    button: {
-        backgroundColor: 'red',
-        paddingVertical: 12,
-        paddingHorizontal: 40,
-        borderRadius: 10,
-        marginTop: 20,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.3,
-        shadowRadius: 3,
-        elevation: 5,
-    },
-    button2: {
-        backgroundColor: 'grey',
-        paddingVertical: 12,
-        paddingHorizontal: 40,
-        borderRadius: 10,
-        marginTop: 20,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.3,
-        shadowRadius: 3,
-        elevation: 5,
-    },
-    buttonText: {
-        color: '#fff',
-        fontSize: 16,
-        fontWeight: 'bold',
-        textAlign: 'center',
-    }
-})
+  container: {
+    flex: 1,
+    backgroundColor: '#fff0f0',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 24,
+  },
+  title: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    color: '#d62828',
+    marginBottom: 30,
+    textAlign: 'center',
+  },
+  input: {
+    width: '100%',
+    padding: 14,
+    marginBottom: 16,
+    borderWidth: 2,
+    borderColor: '#d62828',
+    borderRadius: 12,
+    backgroundColor: '#fff',
+    color: '#000',
+    fontSize: 16,
+  },
+  outlineButton: {
+    borderWidth: 2,
+    borderColor: '#d62828',
+    borderRadius: 12,
+    paddingVertical: 14,
+    paddingHorizontal: 30,
+    backgroundColor: 'transparent',
+    alignItems: 'center',
+    width: '100%',
+    marginVertical: 8,
+  },
+  outlineButtonText: {
+    color: '#d62828',
+    fontSize: 16,
+    fontWeight: '600',
+    textAlign: 'center',
+  },
+});
 
-export default Login
+export default Login;
