@@ -7,25 +7,34 @@ export default class CreatePost extends Component {
     constructor(props) { //se usa para inicializar el estado.
         super(props)
         this.state = {
-            descripcion: ""
+            descripcion: "",
+            mensajeExito: ""
         }
     }
 
     agregarPost(desc) {
-        db.collection('posts').add(
-            {
-                owner: auth.currentUser.email, //si el metodo tiene el mail del usuario uso solo el parametro,si no lo tiene uso el auth.currentuser
-                createdAt: Date.now(),
-                descripcion: desc, //NO es el estado
-                like: []
-            }
-        )
+        db.collection('posts').add({
+            owner: auth.currentUser.email,
+            createdAt: Date.now(),
+            descripcion: desc,
+            like: []
+        })
+            .then(() => {
+                this.setState({
+                    mensajeExito: '¡Tu posteo ya fue creado!',
+                });
+            })
+            .catch(error => {
+                console.log(error);
+                alert('Hubo un error al crear el posteo');
+            });
     }
+
 
     render() {
         return (
             <View style={styles.container}>
-                <Text style={styles.title}>Crear posteo</Text>
+                <Text style={styles.title}>Crear Posteo</Text>
                 <TextInput style={styles.input}
                     keyboardType='default'
                     value={this.state.descripcion}
@@ -35,6 +44,9 @@ export default class CreatePost extends Component {
                 <TouchableOpacity style={styles.button} onPress={() => this.agregarPost(this.state.descripcion)}>
                     <Text style={styles.buttonText}>Agregar posteo</Text>
                 </TouchableOpacity>
+                {this.state.mensajeExito !== '' && (
+                    <Text style={styles.mensajeExito}>{this.state.mensajeExito}</Text>
+                )}
             </View>
 
         )
@@ -45,46 +57,50 @@ export default class CreatePost extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#f2f2f2',
+        backgroundColor: '#fff0f0',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: 20,
+        padding: 24,
     },
     title: {
-        fontSize: 28,
+        fontSize: 30,
         fontWeight: 'bold',
-        color: 'black',
+        color: '#d62828',
         marginBottom: 30,
+        textAlign: 'center',
     },
     input: {
         width: '100%',
-        height: 100,
-        padding: 12,
-        paddingTop: 16,
-        marginVertical: 10,
-        borderWidth: 1.5,
-        borderColor: 'red',
-        borderRadius: 10,
+        minHeight: 100,
+        padding: 14,
+        borderWidth: 2,
+        borderColor: '#d62828',
+        borderRadius: 12,
         backgroundColor: '#fff',
+        fontSize: 16,
         color: '#000',
-        textAlignVertical: 'top', // para que empiece desde arriba
+        textAlignVertical: 'top',
+        marginBottom: 20,
     },
     button: {
-        backgroundColor: 'red',
-        paddingVertical: 12,
-        paddingHorizontal: 40,
-        borderRadius: 10,
-        marginTop: 20,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.3,
-        shadowRadius: 3,
-        elevation: 5,
+        borderWidth: 2,
+        borderColor: '#d62828',
+        borderRadius: 12,
+        paddingVertical: 14,
+        paddingHorizontal: 30,
+        backgroundColor: 'transparent',
+        alignItems: 'center',
+        width: '100%',
     },
     buttonText: {
-        color: '#fff',
+        color: '#d62828',
         fontSize: 16,
+        fontWeight: '600',
+    },
+    mensajeExito: {
+        color: '#d62828',
+        fontSize: 16,
+        marginTop: 20,
         fontWeight: 'bold',
-        textAlign: 'center',
     }
-})
+});

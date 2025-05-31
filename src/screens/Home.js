@@ -28,7 +28,7 @@ class Home extends Component {
     }
     render() {
         return (
-            <View>
+            <View style={styles.container}>
                 {this.state.posts.length === 0 ? (
                     <Text style={styles.sinPost}>No hay ningún posteo.</Text>
                 ) : (
@@ -46,62 +46,18 @@ class Home extends Component {
 
 }
 
-  const styles = StyleSheet.create({
-    fondo: {
-      flex: 1,
-      backgroundColor: '#fefefe',
-      padding: 20,
-    },
-    tituloPrincipal: {
-      fontSize: 24,
-      fontWeight: 'bold',
-      marginBottom: 15,
-      color: '#1e1e1e',
-    },
-    itemInfo: {
-      fontSize: 16,
-      marginBottom: 5,
-      color: '#555',
-    },
-    subtitulo: {
-      fontSize: 18,
-      marginTop: 20,
-      marginBottom: 10,
-      fontWeight: '600',
-      color: '#333',
-    },
-    sinPost: {
-      fontSize: 16,
-      fontStyle: 'italic',
-      color: '#888',
-    },
-    cardPost: {
-      padding: 10,
-      backgroundColor: '#e8f0fe',
-      borderRadius: 6,
-      marginBottom: 10,
-    },
-    textoPost: {
-      fontSize: 15,
-      color: '#111',
-    },
-    botonSalir: {
-      marginTop: 30,
-      padding: 12,
-      backgroundColor: 'red',
-      borderRadius: 6,
-      alignItems: 'center',
-    },
-    textoBoton: {
-      color: 'white',
-      fontSize: 16,
-      fontWeight: 'bold',
-    },
-    cargando: {
-      marginTop: 50,
-      textAlign: 'center',
-      fontSize: 16,
-    },
-  });
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff', // fondo blanco puro
+    padding: 20,
+  },
+  sinPost: {
+    fontSize: 18,
+    fontStyle: 'italic',
+    color: '#333',
+    textAlign: 'center',
+    marginTop: 50,
+  }})
 
-export default Home;
+  export default Home;
