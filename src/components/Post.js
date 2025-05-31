@@ -1,17 +1,76 @@
-import React, { Component } from "react";
+import React, { Component, lazy } from "react";
 import { View, Text, Image, StyleSheet, FlatList, ActivityIndicator, TouchableOpacity } from 'react-native'
+import { auth, db } from '../firebase/config'
+import firebase from 'firebase';
 
 class Post extends Component {
     constructor(props) {
-        super(props)
+        super(props) 
+        this.state ={
+            label: "dislike",
+            cantLikes: this.props.datos.like.length,  //va por el estado pq es dinamico
+            estadoLikeo: true
+        }
+    }
+    componentDidMount(){
+        if(this.props.datos.like.includes(auth.currentUser.email)) {
+            this.setState({label:"dislike", estadoLikeo:true}) //en este caso esta likeado, y si toco el boton dislikeo 
+        }
+        else {
+            this.setState({label:"like", estadoLikeo:false}) //en este caso esta dislikeado, y si toco el boton likeo 
+        }
     }
 
+    likear(){
+        if(this.state.estadoLikeo == true){
+            db.collection('posts')
+            .doc(this.props.id)
+            .update({
+                like: firebase.firestore.FieldValue.arrayRemove(auth.currentUser.email) 
+            })
+            .then(() => this.setState({
+                cantLikes: this.state.cantLikes - 1,
+                label: "Like",
+                estadoLikeo: false
+            }))
+        }
+        else {
+            db.collection('posts')
+            .doc(this.props.id)
+            .update({
+                like: firebase.firestore.FieldValue.arrayUnion(auth.currentUser.email) 
+            })
+            .then(() => this.setState({
+                cantLikes: this.state.cantLikes + 1,
+                label: "Dislike",
+                estadoLikeo: true
+            }))    
+        }
+       
+    }
+
+    delete() {
+        db.collection('posts')
+        .doc(this.props.id)
+        .delete()
+        .then(() => {
+        })
+        .catch((error) => {
+        });
+    }
+    
     render() {
         return (
             <View style={styles.cardPost}>
                 <Text style={styles.textoPost}>{this.props.datos.descripcion}</Text>
                 <Text style={styles.textoPost}>{this.props.datos.owner} </Text>
-                <Text style={styles.textoPost}>Likes:{this.props.datos.like.length} </Text>
+                <Text style={styles.textoPost}>Likes:{this.state.cantLikes} </Text>
+                <TouchableOpacity style={styles.button} onPress={() => this.likear()}> 
+                    <Text style={styles.buttonText}> {this.state.label}</Text>
+                </TouchableOpacity>
+                {this.props.miPerfil ? ( <TouchableOpacity style={styles.button} onPress={() => this.delete()}> 
+                    <Text style={styles.buttonText}> eliminar </Text>
+                </TouchableOpacity>) : (<View> </View>) }
             </View>
         )
     }

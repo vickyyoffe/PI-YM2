@@ -11,6 +11,13 @@ class Login extends Component {
             error: false
         }
     }
+    componentDidMount() { 
+        auth.onAuthStateChanged((user) => {
+          if (user) {
+        this.props.navigation.navigate('Tab') 
+        }
+    })
+    }
     LoguearUsuario(email, password) {
         if (
             (email !== '' && password !== '')

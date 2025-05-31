@@ -36,7 +36,7 @@ class Home extends Component {
                         data={this.state.posts}
                         keyExtractor={(item) => item.id}
                         renderItem={({ item }) => (
-                            <Post datos={item.data}/>
+                            <Post datos={item.data} id={item.id} miPerfil = {false}/>
                         )}
                     />
                 )}

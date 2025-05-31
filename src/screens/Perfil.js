@@ -1,6 +1,7 @@
 import { View, Text, Touchable, TouchableOpacity, FlatList, StyleSheet } from 'react-native' //para listar elementos uso flatlist
 import React, { Component } from 'react'
 import { auth ,db} from '../firebase/config'
+import Post from '../components/Post';
 
 export default class Perfil extends Component {
     constructor(props){
@@ -8,6 +9,7 @@ export default class Perfil extends Component {
         this.state = {
           dataDelUsuario: null,
           postDelUsuario: [],
+
         }
       }
       componentDidMount(){
@@ -57,9 +59,7 @@ export default class Perfil extends Component {
                 data={postDelUsuario}
                 keyExtractor={(item) => item.id}
                 renderItem={({ item }) => (
-                  <View style={styles.cardPost}>
-                    <Text style={styles.textoPost}>{item.data.descripcion}</Text>
-                  </View>
+                    <Post datos={item.data} id={item.id} miPerfil={true} />
                 )}
               />
             )}
