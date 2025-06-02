@@ -26,7 +26,7 @@ export default function Pantalla(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f4f4f4', // fondo gris claro minimalista
+    backgroundColor: '#fff0f0',
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 24,
@@ -35,12 +35,12 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: '700',
     marginBottom: 48,
-    color: '#000',
+    color: '#d62828',
     letterSpacing: 1,
     textTransform: 'uppercase',
   },
   button: {
-    backgroundColor: 'red', // rojo fuerte para ambos botones
+    backgroundColor: '#d62828',
     paddingVertical: 14,
     paddingHorizontal: 24,
     borderRadius: 8,
@@ -51,6 +51,6 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#fff',
+    color: '#fff0f0',
   },
 });

@@ -23,9 +23,7 @@ class Home extends Component {
         })
     }
 
-    redireccionar(nombrePantalla) {
-        this.props.navigation.navigate(nombrePantalla)
-    }
+  
     render() {
         return (
             <View style={styles.container}>
