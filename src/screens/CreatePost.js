@@ -7,8 +7,7 @@ export default class CreatePost extends Component {
     constructor(props) { //se usa para inicializar el estado.
         super(props)
         this.state = {
-            descripcion: "",
-            mensajeExito: ""
+            descripcion: ""
         }
     }
 
@@ -19,17 +18,14 @@ export default class CreatePost extends Component {
             descripcion: desc,
             like: []
         })
-            .then(() => {
-                this.setState({
-                    mensajeExito: '¡Tu posteo ya fue creado!',
-                });
+            .then(() => { 
+                this.props.navigation.navigate('Home'); // redirige a Home
             })
             .catch(error => {
                 console.log(error);
                 alert('Hubo un error al crear el posteo');
             });
     }
-
 
     render() {
         return (
@@ -44,9 +40,6 @@ export default class CreatePost extends Component {
                 <TouchableOpacity style={styles.button} onPress={() => this.agregarPost(this.state.descripcion)}>
                     <Text style={styles.buttonText}>Agregar posteo</Text>
                 </TouchableOpacity>
-                {this.state.mensajeExito !== '' && (
-                    <Text style={styles.mensajeExito}>{this.state.mensajeExito}</Text>
-                )}
             </View>
 
         )
@@ -96,11 +89,5 @@ const styles = StyleSheet.create({
         color: '#d62828',
         fontSize: 16,
         fontWeight: '600',
-    },
-    mensajeExito: {
-        color: '#d62828',
-        fontSize: 16,
-        marginTop: 20,
-        fontWeight: 'bold',
     }
 });

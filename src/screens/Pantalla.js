@@ -4,7 +4,7 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 export default function Pantalla(props) {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Ingresar</Text>
+      <Text style={styles.title}>¡Bienvenido/a!</Text>
 
       <TouchableOpacity
         onPress={() => props.navigation.navigate('Register')}

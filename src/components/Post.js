@@ -7,17 +7,17 @@ class Post extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            label: "dislike",
+            label: "Dislike",
             cantLikes: this.props.datos.like.length,  //va por el estado pq es dinamico
             estadoLikeo: true
         }
     }
     componentDidMount() {
         if (this.props.datos.like.includes(auth.currentUser.email)) {
-            this.setState({ label: "dislike", estadoLikeo: true }) //en este caso esta likeado, y si toco el boton dislikeo 
+            this.setState({ label: "Dislike", estadoLikeo: true }) //en este caso esta likeado, y si toco el boton dislikeo 
         }
         else {
-            this.setState({ label: "like", estadoLikeo: false }) //en este caso esta dislikeado, y si toco el boton likeo 
+            this.setState({ label: "Like", estadoLikeo: false }) //en este caso esta dislikeado, y si toco el boton likeo 
         }
     }
 
@@ -63,8 +63,9 @@ class Post extends Component {
         return (
             <View style={styles.cardPost}>
                 <Text style={styles.descripcion}>{this.props.datos.descripcion}</Text>
-                <Text style={styles.owner}>{this.props.datos.owner}</Text>
-
+                <View style={styles.ownerContainer}>
+                    <Text style={styles.owner}>{this.props.datos.owner}</Text>
+                </View>
                 <View style={styles.likesRow}>
                     <Text style={styles.likes}>❤️ {this.state.cantLikes}</Text>
 
@@ -92,50 +93,60 @@ const styles = StyleSheet.create({
         borderRadius: 12,
         padding: 15,
         marginBottom: 15,
-      },
-      descripcion: {
+    },
+    descripcion: {
         fontSize: 18,
         fontWeight: '600',
         color: '#222',
         marginBottom: 6,
-      },
-      owner: {
-        fontSize: 14,
-        color: '#555',
+    },
+    ownerContainer: {
+        alignItems: 'flex-end', 
         marginBottom: 12,
-      },
-      likesRow: {
+    },
+
+    owner: {
+        fontSize: 14,
+        color: '#d62828',        
+        fontWeight: 'bold',      
+        backgroundColor: '#ffe5e5', 
+        paddingHorizontal: 8,
+        paddingVertical: 2,
+        borderRadius: 6,
+    },
+
+    likesRow: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'flex-start',
         gap: 10,
-      },
-      likes: {
+    },
+    likes: {
         fontSize: 15,
         color: '#e91e63',
-      },
-      buttonLike: {
-        backgroundColor: '#e0e0e0', // gris claro
+    },
+    buttonLike: {
+        backgroundColor: '#e0e0e0', 
         paddingVertical: 4,
         paddingHorizontal: 10,
         borderRadius: 6,
-      },
-      buttonText: {
-        color: '#222', // texto negro
+    },
+    buttonText: {
+        color: '#222', 
         fontSize: 14,
         fontWeight: '600',
-      },
-      buttonDelete: {
+    },
+    buttonDelete: {
         backgroundColor: '#f44336',
         paddingVertical: 4,
         paddingHorizontal: 10,
         borderRadius: 6,
-      },
-      buttonDeleteText: {
+    },
+    buttonDeleteText: {
         color: '#fff',
         fontSize: 14,
         fontWeight: '600',
-      },
-    });      
+    },
+});
 
 export default Post;
